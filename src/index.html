@@ -15,18 +15,14 @@
             <button class="bg-green-800 p-2 rounded active:bg-green-500 active:text-black" id="login-signout">Log In</button>
         </div>
     </header>
-    <main class="flex flex-col md:flex-row justify-center items-center flex-1 bg-sky-500 shadow-lg">
-        <div class="self-stretch mx-5 my-auto h-4/5 md:w-1/2 bg-sky-100 rounded-lg opacity-75 shadow-lg message-box relative">
-            <div class="messages">
-
+    <main class="relative h-full bg-sky-700 items-center">
+        <div id="chatbox" class="flex flex-col bg-white h-4/5 aspect-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div class="messages flex-auto overflow-y-auto"></div>
+            <div class="chatter flex">
+                <input type="text" id="message-input" class="flex-auto p-4 outline-none">
+                <button id="send-button" class=" bg-green-500 p-4">SEND</button>
             </div>
-            <aside id="message-sender" class="flex absolute bottom-0 w-full">
-                <input type="text" id="message-input" class="outline-0 px-5 py-3 flex-1">
-                <button class="w-20 bg-red-500">SEND</button>
-            </aside>
         </div>
-
-        <aside class="hidden w-1/2 md:block text-center mx-5 text-xl text-white shadow-sm bg-slate-400 py-3 rounded" style="text-shadow: 1px 1px 5px black;">Browser-based chatting application; designed with Tailwind CSS, made possible with Firebase.</aside>
     </main>
 </body>
 </html>
