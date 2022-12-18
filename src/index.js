@@ -56,14 +56,14 @@ const authStateObserver = () => {
         signLogButton.classList.add('bg-red-800');
         signLogButton.textContent = 'Log Out'
         loggedInUser.textContent = getAuth().currentUser.displayName;
-        displayMessage();
+        readMessage();
     }
     else {
         signLogButton.classList.remove('bg-red-800');
         signLogButton.classList.add('bg-green-800');
         signLogButton.textContent = 'Log In';
         loggedInUser.textContent = '';
-        displayMessage();
+        readMessage();
     }
 }
 
@@ -96,18 +96,22 @@ const displayMessage = (uid, timeStamp, message, profile, name) => {
         messages.innerHTML = '';
         return;
     }
+
+    if(!(uid && timeStamp && message && profile && name)) return;
+
     if(getAuth().currentUser.uid != uid) {
+        console.log('peekaboo');
         const messageDiv = document.createElement('div');
         const profileImg = document.createElement('img');
         const messageParagraph = document.createElement('p');
         const h3 = document.createElement('h3');
-        const time = document.createElement('p');
+        // const time = document.createElement('p');
         const textDetailsDiv = document.createElement('div');
         profileImg.src = profile;
         messageParagraph.textContent = message;
         h3.textContent = name;
-        time.textContent = (timeStamp.toDate()).toString().substring(4, 15);
-        textDetailsDiv.append(h3, messageParagraph, time);
+        // time.textContent = (timeStamp.toDate()).toString().substring(4, 15);
+        textDetailsDiv.append(h3, messageParagraph);
         messageDiv.append(profileImg, textDetailsDiv);
         //design messagediv with Tailwindcss
         textDetailsDiv.className = 'bg-sky-900 p-3 rounded';
