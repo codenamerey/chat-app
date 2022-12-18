@@ -1,0 +1,55 @@
+import firebaseConfig from "./firebaseConfig";
+import { initializeApp } from "firebase/app";
+import {
+    getAuth,
+    onAuthStateChanged,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut,
+  } from 'firebase/auth';
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    limit,
+    onSnapshot,
+    setDoc,
+    updateDoc,
+    doc,
+    serverTimestamp,
+  } from 'firebase/firestore';
+
+
+initializeApp(firebaseConfig);
+
+const signLogButton = document.querySelector('#login-signout');
+const loggedInUser = document.querySelector('#logged-in-user');
+
+const handleSignLogClick = async() => {
+    if(getAuth().currentUser != null) {
+        signLogButton.classList.remove('bg-red-800');
+        signLogButton.classList.add('bg-green-800');
+        signLogButton.textContent = 'Log In';
+        loggedInUser.textContent = '';
+        return signOut(getAuth());
+    }
+
+    const provider = new GoogleAuthProvider();
+    try {
+        await signInWithPopup(getAuth(), provider);
+        signLogButton.classList.remove('bg-green-800');
+        signLogButton.classList.add('bg-red-800');
+        signLogButton.textContent = 'Log Out'
+        loggedInUser.textContent = getAuth().currentUser.displayName;
+    } 
+
+    catch {
+        console.error('failed to connect!');
+    }
+}
+
+
+
+signLogButton.addEventListener('click', handleSignLogClick);
