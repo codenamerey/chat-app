@@ -100,18 +100,17 @@ const displayMessage = (uid, timeStamp, message, profile, name) => {
     if(!(uid && timeStamp && message && profile && name)) return;
 
     if(getAuth().currentUser.uid != uid) {
-        console.log('peekaboo');
         const messageDiv = document.createElement('div');
         const profileImg = document.createElement('img');
         const messageParagraph = document.createElement('p');
         const h3 = document.createElement('h3');
-        // const time = document.createElement('p');
+        const time = document.createElement('p');
         const textDetailsDiv = document.createElement('div');
         profileImg.src = profile;
         messageParagraph.textContent = message;
         h3.textContent = name;
-        // time.textContent = (timeStamp.toDate()).toString().substring(4, 15);
-        textDetailsDiv.append(h3, messageParagraph);
+        time.textContent = (timeStamp.toDate()).toString().substring(4, 15);
+        textDetailsDiv.append(h3, messageParagraph, time);
         messageDiv.append(profileImg, textDetailsDiv);
         //design messagediv with Tailwindcss
         textDetailsDiv.className = 'bg-sky-900 p-3 rounded';
@@ -138,7 +137,7 @@ const displayMessage = (uid, timeStamp, message, profile, name) => {
         messageDiv.append(profileImg, textDetailsDiv);
         //design messagediv with Tailwindcss
         textDetailsDiv.className = 'bg-green-900 p-3 rounded';
-        messageDiv.className = 'flex flex-row-reverse w-4/5 self-end text-right p-6 space-x-2';
+        messageDiv.className = 'flex flex-row-reverse w-4/5 self-end text-right p-6 space-x-2 space-x-reverse';
         profileImg.className = 'rounded-full w-14 h-14';
         messageParagraph.className = 'text-white';
         // h3.className = 'font-bold';
@@ -147,7 +146,6 @@ const displayMessage = (uid, timeStamp, message, profile, name) => {
 }
 
 initFirebaseAuth();
-readMessage();
 
 signLogButton.addEventListener('click', handleSignLogClick);
 sendButton.addEventListener('click', sendMessage);
