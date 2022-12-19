@@ -38,6 +38,7 @@ const handleSignLogClick = async() => {
     const provider = new GoogleAuthProvider();
     try {
         await signInWithPopup(getAuth(), provider);
+        document.location.reload();
     } 
 
     catch {
@@ -52,18 +53,19 @@ const initFirebaseAuth = () => {
 const authStateObserver = () => {
     let user = getAuth().currentUser;
     if(user) {
+        unconcealMessages();
         signLogButton.classList.remove('bg-green-800');
         signLogButton.classList.add('bg-red-800');
         signLogButton.textContent = 'Log Out'
         loggedInUser.textContent = getAuth().currentUser.displayName;
-        readMessage();
     }
     else {
+        messages.innerHTML = '';
+        concealMessages();
         signLogButton.classList.remove('bg-red-800');
         signLogButton.classList.add('bg-green-800');
         signLogButton.textContent = 'Log In';
         loggedInUser.textContent = '';
-        readMessage();
     }
 }
 
@@ -90,10 +92,17 @@ const readMessage = () => {
     });
 }
 
+const concealMessages = () => {
+        messages.classList.add('concealed');
+}
+
+const unconcealMessages = () => {
+    messages.classList.remove('concealed');
+}
+
 const displayMessage = (uid, timeStamp, message, profile, name) => {
     //if user not logged in, don't show messages.
     if(!(getAuth().currentUser)) {
-        messages.innerHTML = '';
         return;
     }
 
@@ -146,6 +155,7 @@ const displayMessage = (uid, timeStamp, message, profile, name) => {
 }
 
 initFirebaseAuth();
+readMessage();
 
 signLogButton.addEventListener('click', handleSignLogClick);
 sendButton.addEventListener('click', sendMessage);
